@@ -17,4 +17,5 @@ You will need sudo privileges. Port 53 is reserverd for explicit reasons.
 Usage:
 ```sudo python3 echodns.py```
 
-
+All requirements installed?
+```pip install -r requirements.txt```
