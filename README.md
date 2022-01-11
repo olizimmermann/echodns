@@ -19,3 +19,8 @@ Usage:
 
 All requirements installed?
 ```pip install -r requirements.txt```
+
+
+Example output:
+
+![alt text](https://github.com/olizimmermann/echodns/blob/main/images/example.png?raw=true)
