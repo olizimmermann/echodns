@@ -37,10 +37,11 @@ max_threads = 100 # 100 is default
 max_thread_age = 5 # seconds - 5 is default
 l_port = 53 # local port to listen
 l_ip = '0.0.0.0' # '0.0.0.0' listen for all local ips
+max_log_size = 100000 # maximal size of log before replacement
 #####################################
 
 ###############LOGGING###############
-logger = loguroz.Loguroz(pathlib.Path(__file__).parent)
+logger = loguroz.Loguroz(pathlib.Path(__file__).parent, max_size=max_log_size)
 DIR = os.path.dirname(pathlib.Path(__file__))
 ####################################
 
@@ -138,6 +139,7 @@ if __name__ == '__main__':
     logger.info("Listen to port: {0}".format(l_port))
     logger.info("Max amount of threads: {0}".format(max_threads))
     logger.info("Max age of thread: {0} seconds".format(max_thread_age))
+    logger.info("Max logging size: {0} kb".format(max_log_size/1000))
 
     all_threads = {}
 
