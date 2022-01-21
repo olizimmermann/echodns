@@ -14,7 +14,7 @@ The endpoint won't notice this "FakeDNS" at all. With the usage of multithreadin
 EchoDNS generates a log file for ongoing investigations. The default size of the log files are 100kb. Please consider to change this size for longer investigation.
 
 You will need **sudo** (admin) privileges to run this script. Port 53 is usually reserverd for explicit reasons.
-Change the listening ip address to **127.0.0.1** or to your local ip address if you need to communicate across devices in your network.
+Change the listening ip address to **127.0.0.1** or to your local ip "l_ip" address if you need to communicate across devices in your network.
 
 Usage:
 ```sudo python3 echodns.py```
