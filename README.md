@@ -13,7 +13,8 @@ EchoDNS shows all requested DNS traffic. It will forward the original packet to 
 The endpoint won't notice this "FakeDNS" at all. With the usage of multithreading, EchoDNS will perfom requests very efficient. A builtin garbage collector takes care of leftover threads. You are able to change the max. amount of allowed threads. Default is set to 100.
 EchoDNS generates a log file for ongoing investigations. The default size of the log files are 100kb. Please consider to change this size for longer investigation.
 
-You will need sudo (admin) privileges to run this script. Port 53 is usually reserverd for explicit reasons.
+You will need **sudo** (admin) privileges to run this script. Port 53 is usually reserverd for explicit reasons.
+Change the listening ip address to **127.0.0.1** or to your local ip address if you need to communicate across devices in your network.
 
 Usage:
 ```sudo python3 echodns.py```
