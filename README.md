@@ -26,3 +26,9 @@ All requirements installed?
 Example output:
 
 ![alt text](https://github.com/olizimmermann/echodns/blob/main/images/example.png?raw=true)
+
+### Filter with grep
+
+If you are using Linux (or anything else with grep), just pipe the output through it to filter for an explicit domain. 
+
+```sudo python3 echodns.py | grep google.com```
