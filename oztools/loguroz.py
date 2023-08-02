@@ -17,7 +17,7 @@ class Loguroz:
 
     """
 
-    def __init__(self, path, max_size=100000, file_name='log.log'):
+    def __init__(self, path, max_size=100000, file_name='echodns.log'):
         """
         initialize logger
 
@@ -27,9 +27,11 @@ class Loguroz:
             file_name: [str] name of log file
 
         """
-        self.path = os.path.join(path, 'log')
+        now = datetime.now()
+        date = now.strftime("%Y%m%d_")
+        self.path = os.path.join(path, 'logs')
         self.max_size = max_size
-        self.file_name = file_name
+        self.file_name = date + file_name
         self.file_path = os.path.join(self.path, self.file_name)
 
         if not os.path.exists(self.path):
@@ -56,7 +58,7 @@ class Loguroz:
 
 
 
-    def info(self, msg, ip='255.255.255.255'):
+    def info(self, msg, ip='\t'):
         """
         log as information
 
@@ -66,7 +68,7 @@ class Loguroz:
             print('{0}\tInfo\t\t{1}\t{2}'.format(self.time_now(), ip, msg), file=log_file)
         print('{0}\tInfo\t\t{1}\t{2}'.format(self.time_now(), ip, msg))
 
-    def warning(self, msg, ip='255.255.255.255'):
+    def warning(self, msg, ip='\t'):
         """
         log as information
 
@@ -85,5 +87,5 @@ class Loguroz:
 
         """
         now = datetime.now()
-        current_time = now.strftime("%d/%m/%Y \t %H:%M:%S")
+        current_time = now.strftime("%Y/%m/%d \t %H:%M:%S")
         return current_time
