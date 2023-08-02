@@ -1,12 +1,13 @@
+import argparse
+import multiprocessing
 import os
 import pathlib
 import socket
-import time
 import sys
 import threading
-import multiprocessing
+import time
+from datetime import datetime, timedelta
 
-from datetime import datetime,timedelta
 from oztools import loguroz
 
 # developed by github.com/olizimmermann
@@ -21,7 +22,7 @@ from oztools import loguroz
 
 # configuration possible below
 
-version = "0.0.1"
+version = "0.0.2"
 logo = r"""
   ___    _        ___  _  _ ___ 
  | __|__| |_  ___|   \| \| / __|
@@ -31,10 +32,10 @@ logo = r"""
  github.com/olizimmermann/echodns""".format(version)
 
 
-################CONFIG###############
+################defaults###############
 dns_server = '1.1.1.1' # used for forwarding
 max_threads = 100 # 100 is default
-max_thread_age = 5 # seconds - 5 is default
+max_thread_age = 1 # seconds - 5 is default
 l_port = 53 # local port to listen
 l_ip = '0.0.0.0' # '0.0.0.0' listen for all local ips
 max_log_size = 100000 # maximal size of log before replacement
@@ -83,7 +84,7 @@ def dns_response(data, addr):
         y += 1 # QNAME and QTYPE
 
     domain_merge = ".".join(domain_parts[:-1])
-    logger.info("DNS Request -> {0}".format(domain_merge), ip)
+    logger.info("DNS -> {0}".format(domain_merge), ip)
   
     dns_forward = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     dns_forward.connect((dns_server, 53))
@@ -114,7 +115,7 @@ def garbage_collector(maxtime:int=5):
     Args:
         maxtime (int, optional): max seconds of age of a process. Defaults to 5.
     """
-    logger.info("Garbage Collector started")
+    logger.info("Garbage collector started")
     while 1:
         terminated = []
         for ts in all_threads:
@@ -127,15 +128,38 @@ def garbage_collector(maxtime:int=5):
                     pass
         for ts in terminated:
             del all_threads[ts]
-        time.sleep(2)
+        time.sleep(1)
 
 
 if __name__ == '__main__':
     print(logo)
     print()
+
+
+    # use argparse for more options
+    # setup config vars
+    parser = argparse.ArgumentParser(description='EchoDNS - DNS traffic analyzer', prog='echodns.py')
+    parser.add_argument('-d', '--dns', help='DNS server to forward requests to', default=dns_server)
+    parser.add_argument('-t', '--threads', help='Max amount of threads', default=max_threads)
+    parser.add_argument('-a', '--age', help='Max age of thread in seconds', default=max_thread_age)
+    parser.add_argument('-p', '--port', help='Local port to listen', default=l_port)
+    parser.add_argument('-i', '--ip', help='Local ip to listen', default=l_ip)
+    parser.add_argument('-l', '--log-size', help='Max size of log in kb', default=max_log_size)
+    args = parser.parse_args()
+
+    dns_server = args.dns
+    max_threads = int(args.threads)
+    max_thread_age = int(args.age)
+    l_port = int(args.port)
+    l_ip = args.ip
+    max_log_size = int(args.log_size)
+
+
+
+
     logger.info("Starting EchoDNS v{0}".format(version))
     logger.info("Forward requests to DNS {0}".format(dns_server))
-    logger.info("Listen to ip: {0}".format(l_ip))
+    logger.info("Listen to IP: {0}".format(l_ip))
     logger.info("Listen to port: {0}".format(l_port))
     logger.info("Max amount of threads: {0}".format(max_threads))
     logger.info("Max age of thread: {0} seconds".format(max_thread_age))
@@ -150,6 +174,10 @@ if __name__ == '__main__':
         garbage.daemon = True
         garbage.start()
         while 1:
+            
+
+
+
             if len(all_threads) < max_threads:
                 data, addr = sock.recvfrom(512)
                 now = datetime.now()
