@@ -1,3 +1,6 @@
+
+# EchoDNS
+
 ```
  ___    _        ___  _  _ ___ 
  | __|__| |_  ___|   \| \| / __|
@@ -7,28 +10,89 @@
 ```
 
 
-Analyze DNS traffic. 
+**Analyze DNS traffic with EchoDNS**
 
-EchoDNS shows all requested DNS traffic. It will forward the original packet to a real DNS server. You can choose the target DNS. Default is 1.1.1.1.
-The endpoint won't notice this "FakeDNS" at all. With the usage of multithreading, EchoDNS will perfom requests very efficient. A builtin garbage collector takes care of leftover threads. You are able to change the max. amount of allowed threads. Default is set to 100.
-EchoDNS generates a log file for ongoing investigations. The default size of the log files are 100kb. Please consider to change this size for longer investigation.
+EchoDNS is a powerful tool designed to analyze DNS traffic by acting as a DNS server, intercepting and forwarding requests to a real DNS server of your choice without being detected. It offers a multithreading feature to process requests more efficiently, and a built-in garbage collector automatically cleans up stuck threads, ensuring optimal performance.
 
-You will need **sudo** (admin) privileges to run this script. Port 53 is usually reserverd for explicit reasons.
-Change the listening ip address to **127.0.0.1** or to your local ip "l_ip" address if you need to communicate across devices in your network.
+## Features
 
-Usage:
-```sudo python3 echodns.py```
+- Intercept and analyze DNS traffic
+- Forward DNS packets to a real DNS server (default: Google DNS)
+- Efficient multithreading for improved performance
+- Automatic thread cleanup using a built-in garbage collector
+- Command-line configuration for customizing various parameters
 
-All requirements installed?
-```pip install -r requirements.txt```
+## Prerequisites
 
+- **sudo (admin) privileges**: EchoDNS requires administrative privileges to operate effectively.
+- **Port 53**: Please note that Port 53 is typically reserved for DNS purposes, and you should consider changing the listening IP address to `127.0.0.1` or your local IP address (`l_ip`) if you need to communicate across devices on your network.
+
+## Getting Started
+
+Follow these simple steps to get started with EchoDNS:
+
+1. Clone this repository to your local machine.
+2. Ensure you have Python 3+ installed (link to Python installation guide).
+3. Install the required dependencies using `pip`:
+
+```bash
+pip install -r requirements.txt
+```
+
+4. Modify the configuration using command-line arguments:
+
+```bash
+usage: echodns.py [-h] [-d DNS] [-t THREADS] [-a AGE] [-p PORT] [-i IP] [-l LOG_SIZE]
+
+EchoDNS - DNS traffic analyzer
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -d DNS, --dns DNS     DNS server to forward requests to (default: Google DNS)
+  -t THREADS, --threads THREADS
+                        Max amount of threads (default: 100)
+  -a AGE, --age AGE     Max age of thread in seconds (default: None)
+  -p PORT, --port PORT  Local port to listen (default: 53)
+  -i IP, --ip IP        Local IP to listen (default: 127.0.0.1)
+  -l LOG_SIZE, --log-size LOG_SIZE
+                        Max size of log in KB (default: 100KB)
+```
+
+5. Run the EchoDNS script with sudo privileges and customize the parameters as needed:
+
+```bash
+sudo python echodns.py -d 8.8.8.8 -t 200 -a 3 -p 53 -i 192.168.1.10 -l 512000
+```
 
 Example output:
 
 ![alt text](https://github.com/olizimmermann/echodns/blob/main/images/example.png?raw=true)
 
-### Filter with grep
+### Filter your output with grep
 
 If you are using Linux (or anything else with grep), just pipe the output through it to filter for an explicit domain. 
 
 ```sudo python3 echodns.py | grep google.com```
+
+## Contributing
+
+We welcome contributions from the community to make EchoDNS even better! If you want to contribute, please follow these steps:
+
+1. Fork this repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them with descriptive messages.
+4. Push your changes to your forked repository.
+5. Submit a pull request to merge your changes into the main repository.
+
+
+## Contact
+
+For any inquiries or feedback, please create an issue.
+
+---
+This readme is a work in progress, and more details will be added soon. Thank you for your understanding as we continue to improve EchoDNS for an even better experience. Happy analyzing!
+
+---
+
+If you have any further questions or need more information, feel free to ask!
+
