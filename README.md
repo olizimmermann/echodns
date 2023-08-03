@@ -24,8 +24,7 @@ EchoDNS is a powerful tool designed to analyze DNS traffic by acting as a DNS se
 
 ## Prerequisites
 
-- **sudo (admin) privileges**: EchoDNS requires administrative privileges to operate effectively.
-- **Port 53**: Please note that Port 53 is typically reserved for DNS purposes, and you should consider changing the listening IP address to `127.0.0.1` or your local IP address (`l_ip`) if you need to communicate across devices on your network.
+- **sudo (admin) privileges**: EchoDNS requires administrative privileges to operate effectively because port 53 is usually reserved. You need root permission to use that port.
 
 ## Getting Started
 
@@ -83,6 +82,10 @@ We welcome contributions from the community to make EchoDNS even better! If you 
 3. Make your changes and commit them with descriptive messages.
 4. Push your changes to your forked repository.
 5. Submit a pull request to merge your changes into the main repository.
+
+## License
+
+EchoDNS is distributed under the Apache License. See the [`LICENSE`](LICENSE) file for more details.
 
 
 ## Contact
