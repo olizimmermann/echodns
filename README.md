@@ -95,7 +95,4 @@ For any inquiries or feedback, please create an issue.
 ---
 This readme is a work in progress, and more details will be added soon. Thank you for your understanding as we continue to improve EchoDNS for an even better experience. Happy analyzing!
 
----
-
-If you have any further questions or need more information, feel free to ask!
 
